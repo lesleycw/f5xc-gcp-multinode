@@ -1,0 +1,68 @@
+variable "project_prefix" {
+  type        = string
+  description = "prefix string put in front of string"
+  default     = "f5xc"
+}
+
+variable "project_suffix" {
+  type        = string
+  description = "prefix string put at the end of string"
+  default     = "01"
+}
+
+variable "f5xc_api_p12_file" {
+  type    = string
+}
+
+variable "f5xc_api_url" {
+  type    = string
+}
+
+variable "f5xc_tenant" {
+  type    = string
+}
+
+variable "f5xc_namespace" {
+  type = string
+  default = "system"
+}
+
+variable "f5xc_api_token" {
+  type    = string
+}
+
+variable "f5xc_gcp_project_id" {
+  type    = string
+}
+
+variable "f5xc_gcp_region" {
+  type    = string
+  default = "us-east1"
+}
+
+variable "f5xc_gcp_zone_names" {
+  type    = list(string)
+  default = ["us-east1-b"]
+}
+
+module "gcp_multi_node_single_nic_new_network_new_subnet" {
+  source                            = "./modules/f5xc/site/gcp"
+  f5xc_tenant                       = var.f5xc_tenant
+  f5xc_api_url                      = var.f5xc_api_url
+  f5xc_gcp_cred                     = "ck-gcp-01"
+  f5xc_api_token                    = var.f5xc_api_token
+  f5xc_namespace                    = var.f5xc_namespace
+  f5xc_gcp_region                   = var.f5xc_gcp_region
+  f5xc_gcp_site_name                = format("%s-gcp-mn-snic-nnw-nsnet-%s", var.project_prefix, var.project_suffix)
+  f5xc_gcp_ce_gw_type               = "single_nic"
+  f5xc_gcp_zone_names               = var.f5xc_gcp_zone_names
+  f5xc_gcp_project_id               = var.f5xc_gcp_project_id
+  f5xc_gcp_node_number              = 3
+  f5xc_gcp_local_subnet_name        = format("%s-gcp-mn-snic-nnw-nsnet-%s", var.project_prefix, var.project_suffix)
+  f5xc_gcp_local_network_name       = format("%s-gcp-mn-snic-nnw-nsnet-%s", var.project_prefix, var.project_suffix)
+  f5xc_gcp_local_primary_ipv4       = "192.168.169.0/24"
+  f5xc_gcp_default_ce_sw_version    = true
+  f5xc_gcp_default_ce_os_version    = true
+  f5xc_gcp_default_blocked_services = true
+  public_ssh_key                    = "ssh-rsa xyz"
+}
