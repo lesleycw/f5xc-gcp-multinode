@@ -6,7 +6,7 @@ This repository consists of Terraform templates to bring up a F5XC GCP multi nod
 
 - Clone this repo with: `git clone --recurse-submodules https://gitlab.com/lesleycw/f5xc-gcp-multinode`
 - Enter repository directory with: `cd f5xc-gcp-multinode`
-- Obtain F5XC API certificate file from Console and save it to `cert` directory
+- Obtain F5XC API certificate file from Console and save it to `cert` directory (must create directory)
 - Pick and choose from below examples and add mandatory input data and copy data into file `main.tf.example`.
 - Rename file __main.tf.example__ to __main.tf__ with: `rename main.tf.example main.tf`
 - Initialize with: `terraform init`
